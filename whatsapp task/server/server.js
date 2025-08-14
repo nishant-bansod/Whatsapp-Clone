@@ -14,6 +14,81 @@ const io = new Server(server, { cors: { origin: process.env.CORS_ORIGIN || '*' }
 app.use(cors({ origin: process.env.CORS_ORIGIN || '*' }));
 app.use(express.json());
 
+async function checkAndSeedDatabase() {
+  const count = await Message.countDocuments();
+  if (count === 0) {
+    console.log('Database is empty, seeding with sample data...');
+    try {
+      // Sample data
+      const sampleMessages = [
+        {
+          messageId: 'wamid.HBgLMTIzNDU2Nzg5MBABABIYFjNBMDJENDlBQjA2QjA2QjA2QjA2QjA',
+          waId: '1234567890',
+          contactName: 'John Doe',
+          direction: 'inbound',
+          type: 'text',
+          text: 'Hello! How are you?',
+          timestamp: new Date('2023-12-21T10:30:56.000Z'),
+          status: 'read',
+          statusHistory: [
+            { status: 'sent', at: new Date('2023-12-21T10:30:56.000Z') },
+            { status: 'delivered', at: new Date('2023-12-21T10:30:58.000Z') },
+            { status: 'read', at: new Date('2023-12-21T10:30:59.000Z') }
+          ],
+          from: '1234567890',
+          to: '123456789'
+        },
+        {
+          messageId: 'wamid.HBgLMTIzNDU2Nzg5MBABABIYFjNBMDJENDlBQjA2QjA2QjA2QjA2QjB',
+          waId: '1234567890',
+          contactName: 'John Doe',
+          direction: 'inbound',
+          type: 'text',
+          text: "I'm doing great, thanks for asking!",
+          timestamp: new Date('2023-12-21T10:30:57.000Z'),
+          status: 'sent',
+          statusHistory: [{ status: 'sent', at: new Date('2023-12-21T10:30:57.000Z') }],
+          from: '1234567890',
+          to: '123456789'
+        },
+        {
+          messageId: 'wamid.HBgLOTg3NjU0MzIxMBABABIYFjNBMDJENDlBQjA2QjA2QjA2QjA2QjA',
+          waId: '9876543210',
+          contactName: 'Jane Smith',
+          direction: 'inbound',
+          type: 'text',
+          text: 'Hi there! Can we schedule a meeting?',
+          timestamp: new Date('2023-12-21T10:31:00.000Z'),
+          status: 'sent',
+          statusHistory: [{ status: 'sent', at: new Date('2023-12-21T10:31:00.000Z') }],
+          from: '9876543210',
+          to: '123456789'
+        },
+        {
+          messageId: 'wamid.HBgLOTg3NjU0MzIxMBABABIYFjNBMDJENDlBQjA2QjA2QjA2QjA2QjB',
+          waId: '9876543210',
+          contactName: 'Jane Smith',
+          direction: 'inbound',
+          type: 'text',
+          text: 'Sure! How about tomorrow at 2 PM?',
+          timestamp: new Date('2023-12-21T10:31:01.000Z'),
+          status: 'sent',
+          statusHistory: [{ status: 'sent', at: new Date('2023-12-21T10:31:01.000Z') }],
+          from: '9876543210',
+          to: '123456789'
+        }
+      ];
+      
+      await Message.insertMany(sampleMessages);
+      console.log('Database seeded successfully with sample data!');
+    } catch (error) {
+      console.error('Error seeding database:', error);
+    }
+  } else {
+    console.log(`Database has ${count} messages`);
+  }
+}
+
 async function connectDb() {
   const uri = process.env.MONGODB_URI;
   if (!uri) {
@@ -22,6 +97,9 @@ async function connectDb() {
   }
   await mongoose.connect(uri);
   console.log('Connected to MongoDB');
+  
+  // Check if database is empty and seed if needed
+  await checkAndSeedDatabase();
 }
 
 connectDb().catch((err) => {

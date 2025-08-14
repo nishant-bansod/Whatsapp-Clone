@@ -1,0 +1,35 @@
+:root{
+  --green:#00a884;
+  --sidebar:#111b21;
+  --sidebar-hover:#202c33;
+  --chat-bg:#efeae2;
+  --bubble-out:#d9fdd3;
+  --bubble-in:#ffffff;
+}
+html,body,#__next{height:100%;}
+body{margin:0;font-family:system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";background:var(--sidebar);}
+.app{display:flex;height:100%;}
+.sidebar{width:320px;background:var(--sidebar);color:#e9edef;border-right:1px solid #2a3942;display:flex;flex-direction:column;}
+.chat{flex:1;background:var(--chat-bg);display:flex;flex-direction:column;}
+.convo-list{overflow:auto;}
+.convo-item{width:100%;text-align:left;padding:12px 16px;background:transparent;border:none;border-bottom:1px solid #222e35;color:#e9edef;cursor:pointer;}
+.convo-item:hover{background:var(--sidebar-hover);} 
+.convo-item.active{background:#2a3942;}
+.convo-title{font-weight:600;margin-bottom:4px;}
+.convo-sub{display:flex;justify-content:space-between;color:#8696a0;font-size:12px;}
+.empty-state{margin:auto;color:#667781;}
+.chat-header{background:#202c33;color:#e9edef;padding:10px 16px;border-left:1px solid #2a3942;}
+.chat-title{font-weight:600;}
+.chat-sub{color:#8696a0;font-size:12px;}
+.chat-messages{flex:1;overflow:auto;background:var(--chat-bg);padding:16px;background-image:url('data:image/svg+xml,%3Csvg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"%3E%3Ccircle cx="5" cy="5" r="1" fill="%23e6ddd3"/%3E%3C/svg%3E');}
+.chat-input{display:flex;gap:8px;padding:10px;background:#f0f2f5;border-top:1px solid #d1d7db;}
+.chat-input input{flex:1;padding:10px 12px;border-radius:8px;border:1px solid #d1d7db;}
+.chat-input button{padding:10px 14px;background:var(--green);border:none;border-radius:8px;color:white;cursor:pointer;}
+.bubble{max-width:80%;border-radius:8px;padding:6px 8px;margin:6px 0;font-size:14px;box-shadow:0 1px 0 rgba(0,0,0,.06);} 
+.bubble.inbound{background:var(--bubble-in);margin-right:auto;}
+.bubble.outbound{background:var(--bubble-out);margin-left:auto;}
+.bubble .meta{font-size:10px;color:#667781;text-align:right;margin-top:4px;}
+@media (max-width: 800px){.sidebar{width:100px}.convo-title{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+@media (max-width: 600px){.app{flex-direction:column}.sidebar{width:100%;height:40%;}.chat{height:60%;}}
+
+

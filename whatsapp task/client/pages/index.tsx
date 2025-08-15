@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import { ConversationsList } from '../src/components/ConversationsList';
 import { ChatView } from '../src/components/ChatView';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3002';
+const API_BASE = 'https://whatsapp-backend-ey2f.onrender.com';
 const socket = io(API_BASE);
 
 export default function Home() {
